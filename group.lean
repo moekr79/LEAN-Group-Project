@@ -1,5 +1,5 @@
 import Mathlib
-import Batteries
+
 
 structure our_Group where
   uni : Type
@@ -11,6 +11,7 @@ structure our_Group where
   mul_one : ∀ a : uni, mul a one = a
   mul_inv : ∀ a : uni, mul a (inv a) = one
   inv_mul : ∀ a : uni, mul (inv a) a = one
+
 
 lemma our_unique_inv {G : our_Group} (a b : G.uni) : G.mul a b = G.one → b = G.inv a := by
   intro h
@@ -44,6 +45,7 @@ structure our_Group_Hom (G H : our_Group) where
   ker : Set G.uni
   ker_def : ∀ a : G.uni, map a = H.one ↔ g ∈ ker
 
+
 lemma our_map_inv {G H : our_Group} (f : our_Group_Hom G H) (a : G.uni) :
   f.map (G.inv a) = H.inv (f.map a) := by
   apply our_unique_inv
@@ -56,6 +58,7 @@ lemma our_map_inv {G H : our_Group} (f : our_Group_Hom G H) (a : G.uni) :
     rw [f.hom_one] at h2
     exact h2
   exact h3
+
 
 theorem our_hom_injective_iff_ker_trivial {G H : our_Group} (f : our_Group_Hom G H) :
   Function.Injective f.map ↔ f.ker = {G.one} := by
